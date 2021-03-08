@@ -521,6 +521,15 @@ const (
 
 type PredictiveUnitImplementation string
 
+/*
+Adarga addition: for when our custom inference servers have more than
+one model type in them as we have with our ds-knowledge-store at the moment.
+
+However, this can also just be achieved with an environment variable, so not sure
+if totally necessary
+*/
+type CustomModelType string
+
 const (
 	UNKNOWN_IMPLEMENTATION PredictiveUnitImplementation = "UNKNOWN_IMPLEMENTATION"
 	SIMPLE_MODEL           PredictiveUnitImplementation = "SIMPLE_MODEL"
@@ -582,6 +591,11 @@ type PredictiveUnit struct {
 	ServiceAccountName      string                        `json:"serviceAccountName,omitempty" protobuf:"bytes,9,opt,name=serviceAccountName"`
 	EnvSecretRefName        string                        `json:"envSecretRefName,omitempty" protobuf:"bytes,10,opt,name=envSecretRefName"`
 	StorageInitializerImage string                        `json:"storageInitializerImage,omitempty" protobuf:"bytes,11,opt,name=storageInitializerImage"`
+
+	// Adarga addition.
+	ModelType *CustomModelType `json:"modelType,omitempty" protobuf:"bytes,12,opt,name=modelType"`
+	Assets    []string         `json:"assets,omitempty" protobuf:"bytes,13,opt,name=assets"`
+
 	// Request/response  payload logging. v2alpha1 feature that is added to v1 for backwards compatibility while v1 is the storage version.
 	Logger *Logger `json:"logger,omitempty"`
 }
